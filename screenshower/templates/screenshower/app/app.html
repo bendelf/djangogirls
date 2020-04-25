@@ -1,0 +1,82 @@
+{% extends 'screenshower/base.html' %}
+{% load static %}
+{% block content %}
+    <div>
+        {% if project.published_date %}
+            <div>
+                {{ project.published_date }}
+            </div>
+        {% endif %}
+        <h1>{{ project.title }}</h1>
+    </div>
+   <div class="container">
+      <div class="row-12">
+        <div class="col-3">
+            <nav id="navbar-example3" class="navbar navbar-light bg-light">
+              {% for paroi in sc.parois %}
+                <nav class="nav-nav-pills flex-column">
+                  <nav class="nav-item active dropdown flex-column">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          {{ paroi.name }}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                          <a class="dropdown-item" href="{% url 'paroi_edit' pk=paroi.id %}">View paroi</a>
+                          <a class="dropdown-item" href="#">Add volume</a>
+                          <a class="dropdown-item" href="#">Delete paroi</a>
+                        </div>
+                    </nav>
+                    {% for volume in paroi.volumes %}
+                    <nav class="nav nav-pills flex-column">
+                      <nav class="nav-item  dropdown flex-column ml-3">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              {{ volume.name}}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                              <a class="dropdown-item" href="#">Add button</a>
+                              <a class="dropdown-item" href="#">Delete volume</a>
+                            </div>
+                        </nav>
+                    </nav>
+                   {% endfor %}
+              </nav>
+              {% endfor %}
+            </nav>
+        </div>
+      </div>
+    </div>
+
+
+{% endblock %}
+
+
+<div class="treeview-animated w-20 border border-secondary mx-4 my-4">
+    <h6 class="pt-3 pl-3">Folders</h6>
+    <hr>
+    {% for paroi in sc.parois %}
+    <ul class="treeview-animated-list mb-3">
+      <li class="treeview-animated-items">
+        <a class="treeview-animated-items-header" href="{% url 'paroi_edit' pk=paroi.id %}">
+          <i class="fas fa-plus-circle"></i>
+            <span>
+                <h5 class="far fa-envelope-open ic-w mx-1" >{{ paroi.name }}</h5>
+            </span>
+        </a>
+          {% for volume in paroi.volumes %}
+            <ul class="nested">
+                <li>
+                    <div class="treeview-animated-element"><i class="far fa-bell ic-w mr-1"></i>Volume
+                </li>
+            </ul>
+          {% endfor %}
+      </li>
+    </ul>
+    {% endfor %}
+  </div>
+        {% for paroi in sc.parois %}
+            <a href="{% url 'paroi_edit' pk=paroi.id %}">{{ paroi.name }}</a>
+            <p>{{ paroi.l_finie }}</p>
+        {% endfor %}
+
+
+        <p>{{ project.text|linebreaksbr }}</p>
+    </div>

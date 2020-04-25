@@ -1,0 +1,25 @@
+{% extends "screenshower/base.html" %}
+
+{% block content %}
+    {% if form.errors %}
+<p xmlns="http://www.w3.org/1999/html">Your username and password didn't match. Please try again.</p>
+    {% endif %}
+
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <form method="post" action="{% url 'login' %}">
+                {% csrf_token %}
+                {{form.username}}
+                {{form.password}}
+                <input type="submit" class="fadeIn fourth" value="login" />
+            </form>
+
+
+<!-- Remind Passowrd -->
+             <div id="formFooter">
+                <a class="underlineHover" href="#">Forgot Password?</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

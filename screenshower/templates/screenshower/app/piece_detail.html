@@ -1,0 +1,13 @@
+{% extends 'screenshower/app/base_app.html' %}
+
+{% block content %}
+    <div class="post">
+        {% if user.is_authenticated %}
+            <a class="btn btn-default" href="{% url 'piece_edit' pk=piece.pk %}"><span class="glyphicon glyphicon-pencil"></span></a>
+        {% endif %}
+
+        <h2>{{ piece.cd }}</h2>
+        <h2>{{ piece.designation }}</h2>
+        <p>{{ project.text|linebreaksbr }}</p>
+    </div>
+{% endblock %}

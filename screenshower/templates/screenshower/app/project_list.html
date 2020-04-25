@@ -1,0 +1,41 @@
+{% extends 'screenshower/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <h1>
+        My projects
+
+    </h1>
+    <div class="table-responsive">
+        <table class="table table-sm">
+            <thead class="thead-dark">
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">Project</th>
+                  <th scope="col">Description</th>
+                  <th scope="col">View / Delete</th>
+                </tr>
+        </thead>
+        {% for project in projects %}
+            <tr scope="row">
+                <td>
+                    {{ project.id }}
+                </td>
+                <td>
+                    {{ project.title }}
+                </td>
+                <td>
+                    {{ project.text }}
+                </td>
+                {% if user.is_authenticated %}
+                <td>
+                    <a class="btn btn-success" href="{% url 'app' pk=project.pk %}" style="float:center" role="button">View</a>
+                    <a class="btn btn-danger" href="{% url 'project_remove' pk=project.pk %}" style="float:center" role="button">Delete</a>
+                </td>
+                {% endif %}
+            </tr>
+             {% endfor %}
+        </table>
+    </div>
+{% endblock %}
